@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Fourdots Links</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+:root{--bg:#0c0c0e;--panel:#141417;--panel2:#1b1b1f;--line:#2a2a30;--text:#f2f2f4;--muted:#9a9aa5;--accent:#c5ff3a;--accent-text:#0c0c0e;--bad:#ff6b6b;--good:#3ddc84}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 Inter,system-ui,sans-serif}
+a{color:inherit}button,input,select,textarea{font:inherit;color:inherit}[hidden]{display:none!important}
+input,select,textarea{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:9px 11px}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent)}textarea{min-height:90px;resize:vertical}
+input[type=color]{padding:2px;height:38px;width:52px;flex:none}input[type=checkbox]{width:auto}
+label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin:0 0 5px}
+.f{margin-bottom:12px}.row{display:flex;gap:10px;align-items:flex-end}.row>*{flex:1}.row>.n{flex:none}
+.b{border:1px solid var(--line);background:var(--panel2);border-radius:8px;padding:8px 13px;cursor:pointer;font-weight:600;white-space:nowrap}
+.b:hover{border-color:#44444c}.b.p{background:var(--accent);border-color:var(--accent);color:var(--accent-text)}.b.d{color:var(--bad)}.b.s{padding:5px 9px;font-size:12px}
+.b[disabled]{opacity:.5;cursor:default}
+.hint{font-size:12px;color:var(--muted);margin-top:4px}.k{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--panel2);border:1px solid var(--line);padding:10px 16px;border-radius:10px;z-index:99;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.toast.bad{border-color:var(--bad);color:var(--bad)}
+/* login */
+#login{min-height:100vh;display:grid;place-items:center;padding:16px}#login .card{width:100%;max-width:360px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px}.brand i{width:26px;height:26px;border-radius:7px;background:var(--accent);display:grid;place-items:center;color:var(--accent-text);font-style:normal;font-size:13px;font-weight:800}
+/* app */
+header.top{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--line);background:rgba(12,12,14,.92);backdrop-filter:blur(8px);flex-wrap:wrap}
+header.top select{width:auto;min-width:180px}header.top .sp{flex:1}
+nav.tabs{display:flex;gap:4px;padding:10px 16px 0;border-bottom:1px solid var(--line);overflow-x:auto}
+nav.tabs button{border:0;background:none;padding:9px 12px;border-bottom:2px solid transparent;color:var(--muted);font-weight:600;cursor:pointer;white-space:nowrap}
+nav.tabs button.on{color:var(--text);border-color:var(--accent)}
+.main{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:18px;padding:18px 16px;max-width:1280px;margin:0 auto}
+.main.full{grid-template-columns:minmax(0,1fr)}
+.pv{position:sticky;top:120px;align-self:start}.pv iframe{width:100%;height:calc(100vh - 170px);min-height:560px;border:1px solid var(--line);border-radius:22px;background:#000}
+.pv .bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+@media (max-width:1000px){.main{grid-template-columns:minmax(0,1fr)}.pv{display:none}}
+.blist{display:flex;flex-direction:column;gap:8px}
+.bl{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.bl.off{opacity:.55}.bl .t{font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.bl .s{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.bl .m{font-size:12px;color:var(--muted)}
+.bl .ord{display:flex;flex-direction:column;gap:2px}.bl .ord button{border:0;background:none;color:var(--muted);cursor:pointer;padding:0 4px;line-height:1}
+.bl .acts{display:flex;gap:6px;align-items:center}
+.ed{background:var(--panel);border:1px solid var(--accent);border-radius:12px;padding:16px;margin:4px 0 8px}
+.sub{border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:10px;background:var(--bg)}
+.hours{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}.hours input{padding:7px;font-size:12px}
+@media (max-width:700px){.hours{grid-template-columns:repeat(2,1fr)}}
+.thumb{width:64px;height:64px;border-radius:8px;object-fit:cover;background:var(--panel2);border:1px solid var(--line);flex:none}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media (max-width:700px){.grid2{grid-template-columns:1fr}}
+table.t{width:100%;border-collapse:collapse;font-size:13px}table.t th,table.t td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}table.t th{color:var(--muted);font-weight:600;font-size:12px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}.stats .card b{display:block;font-size:28px}
+.pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600;background:var(--panel2);border:1px solid var(--line)}
+.pill.good{color:var(--good);border-color:#24583a}.pill.bad{color:var(--bad);border-color:#5a2a2a}
+.add{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+h2{margin:0 0 14px;font-size:18px}h3{margin:18px 0 10px;font-size:14px}
+</style>
+</head>
+<body>
+<section id="login" hidden>
+  <div class="card">
+    <div class="brand" style="margin-bottom:18px"><i>4</i>Fourdots Links</div>
+    <form id="lf">
+      <div class="f"><label>Email</label><input id="le" type="email" autocomplete="email" required></div>
+      <div class="f"><label>Password</label><input id="lp" type="password" autocomplete="current-password" required minlength="8"></div>
+      <div id="lerr" class="hint" style="color:var(--bad)" hidden></div>
+      <div class="row" style="margin-top:6px"><button class="b p" type="submit">Sign in</button><button class="b n" type="button" id="lnew">First time? Set password</button></div>
+      <p class="hint">Only emails added to a client's team can sign in.</p>
+    </form>
+  </div>
+</section>
+
+<section id="app" hidden>
+  <header class="top">
+    <div class="brand"><i>4</i>Links</div>
+    <select id="csel" aria-label="Client"></select>
+    <button class="b s" id="newc" hidden>+ New client</button>
+    <span class="sp"></span>
+    <a class="b s" id="viewp" target="_blank" rel="noopener">Open page ↗</a>
+    <span class="hint" id="who"></span>
+    <button class="b s" id="out">Sign out</button>
+  </header>
+  <nav class="tabs" id="tabs">
+    <button data-t="blocks" class="on">Page</button><button data-t="theme">Look</button><button data-t="settings">Settings</button>
+    <button data-t="signups">Signups</button><button data-t="stats">Stats</button><button data-t="team">Team</button>
+  </nav>
+  <div class="main" id="main">
+    <div id="view"></div>
+    <aside class="pv" id="pv"><div class="bar"><span class="k">Live preview</span><button class="b s" id="rl">Reload</button></div><iframe id="frame" title="Preview"></iframe></aside>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="/api/config"></script>
+<script src="/icons.js"></script>
+<script>
+(() => {
+const CFG = window.LINKS_CFG || {};
+const sb = supabase.createClient(CFG.url, CFG.anon);
+const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const IMG = p => !p ? "" : /^https?:/.test(p) ? p : `${CFG.url}/storage/v1/object/public/links/${p}`;
+const toast = (m, bad) => { const t = document.createElement("div"); t.className = "toast" + (bad ? " bad" : ""); t.textContent = m; document.body.append(t); setTimeout(() => t.remove(), bad ? 5000 : 2200); };
+const must = r => { if (r.error) throw r.error; return r.data; };
+const S = { me: null, client: null, pages: [], page: null, blocks: [], tab: "blocks", open: null };
+
+/* ---------- auth ---------- */
+async function boot() {
+  const { data } = await sb.auth.getSession();
+  if (!data.session) { $("#login").hidden = false; $("#app").hidden = true; return; }
+  const me = must(await sb.rpc("whoami"));
+  if (!me.admin && !me.clients.length) { await sb.auth.signOut(); $("#lerr").textContent = "This email isn't on any client team yet."; $("#lerr").hidden = false; $("#login").hidden = false; return; }
+  S.me = me; $("#login").hidden = true; $("#app").hidden = false; $("#who").textContent = me.email; $("#newc").hidden = !me.admin;
+  fillClients(new URLSearchParams(location.search).get("c"));
+}
+$("#lf").addEventListener("submit", async e => {
+  e.preventDefault(); $("#lerr").hidden = true;
+  const r = await sb.auth.signInWithPassword({ email: $("#le").value.trim(), password: $("#lp").value });
+  if (r.error) { $("#lerr").textContent = /confirm/i.test(r.error.message) ? "This email isn't on a team yet. Ask Fourdots to add you." : "Wrong email or password."; $("#lerr").hidden = false; return; }
+  boot();
+});
+$("#lnew").onclick = async () => {
+  $("#lerr").hidden = true;
+  const email = $("#le").value.trim(), password = $("#lp").value;
+  if (!email || password.length < 8) { $("#lerr").textContent = "Enter your email and a password of 8+ characters, then tap this again."; $("#lerr").hidden = false; return; }
+  const r = await sb.auth.signUp({ email, password });
+  if (r.error) { $("#lerr").textContent = /registered/i.test(r.error.message) ? "You already have a password. Use Sign in." : r.error.message; $("#lerr").hidden = false; return; }
+  if (!r.data.session) { const s = await sb.auth.signInWithPassword({ email, password }); if (s.error) { $("#lerr").textContent = "This email isn't on a team yet. Ask Fourdots to add you."; $("#lerr").hidden = false; return; } }
+  boot();
+};
+$("#out").onclick = async () => { await sb.auth.signOut(); location.reload(); };
+
+/* ---------- clients ---------- */
+function fillClients(want) {
+  const sel = $("#csel"); sel.innerHTML = S.me.clients.map(c => `<option value="${c.id}">${esc(c.name)}</option>`).join("");
+  const pick = S.me.clients.find(c => c.slug === want || c.id === want) || S.me.clients[0];
+  if (pick) { sel.value = pick.id; loadClient(pick.id); } else $("#view").innerHTML = `<div class="card">No clients yet. Use “New client”.</div>`;
+}
+$("#csel").onchange = e => loadClient(e.target.value);
+$("#newc").onclick = async () => {
+  const name = prompt("Client name (e.g. Malleable)"); if (!name) return;
+  const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  try {
+    const c = must(await sb.from("clients").insert({ name, slug, domains: [], theme: {}, settings: { tz: "America/Toronto", default_tag: slug + "-list" } }).select().single());
+    must(await sb.from("pages").insert({ client_id: c.id, slug: "", title: "Home" }));
+    must(await sb.from("blocks").insert({ client_id: c.id, page_id: (must(await sb.from("pages").select("id").eq("client_id", c.id).eq("slug", "").single())).id, type: "header", sort: 0, data: { title: name } }));
+    S.me = must(await sb.rpc("whoami")); fillClients(c.id); toast("Client created");
+  } catch (e) { toast(e.message, true); }
+};
+async function loadClient(id) {
+  S.client = must(await sb.from("clients").select("*").eq("id", id).single());
+  S.pages = must(await sb.from("pages").select("*").eq("client_id", id).order("sort").order("created_at"));
+  S.page = S.pages.find(p => p.slug === "") || S.pages[0] || null;
+  history.replaceState(null, "", "?c=" + S.client.slug);
+  $("#viewp").href = S.client.domains && S.client.domains[0] && S.client.is_live ? "https://" + S.client.domains[0] : `/c/${S.client.slug}`;
+  await loadBlocks(); render();
+}
+async function loadBlocks() { S.blocks = S.page ? must(await sb.from("blocks").select("*").eq("page_id", S.page.id).order("sort")) : []; }
+const reload = () => { const f = $("#frame"); f.src = `/c/${S.client.slug}${S.page && S.page.slug ? "/" + S.page.slug : ""}?t=${Date.now()}`; };
+$("#rl").onclick = reload;
+$$("#tabs button").forEach(b => b.onclick = () => { S.tab = b.dataset.t; $$("#tabs button").forEach(x => x.classList.toggle("on", x === b)); render(); });
+function render() {
+  $("#main").classList.toggle("full", ["signups", "stats", "team"].includes(S.tab)); $("#pv").hidden = ["signups", "stats", "team"].includes(S.tab);
+  ({ blocks: vBlocks, theme: vTheme, settings: vSettings, signups: vSignups, stats: vStats, team: vTeam })[S.tab]();
+  if (!$("#pv").hidden) reload();
+}
+
+/* ---------- uploads ---------- */
+async function shrink(file, max = 1600) {
+  if (!/^image\/(jpeg|png|webp)$/.test(file.type)) return file;
+  const img = await createImageBitmap(file);
+  const scale = Math.min(1, max / Math.max(img.width, img.height));
+  if (scale === 1 && file.size < 500e3) return file;
+  const c = document.createElement("canvas"); c.width = Math.round(img.width * scale); c.height = Math.round(img.height * scale);
+  c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+  const keepAlpha = file.type === "image/png" && file.size < 400e3 && scale === 1;
+  const blob = await new Promise(r => c.toBlob(r, keepAlpha ? "image/png" : "image/webp", 0.82));
+  return new File([blob], file.name.replace(/\.\w+$/, keepAlpha ? ".png" : ".webp"), { type: blob.type });
+}
+async function upload(file, folder = "uploads") {
+  const f = file.type.startsWith("image/") ? await shrink(file) : file;
+  const path = `${S.client.id}/${folder}/${Date.now().toString(36)}-${f.name.toLowerCase().replace(/[^a-z0-9.]+/g, "-")}`;
+  must(await sb.storage.from("links").upload(path, f, { contentType: f.type || "application/octet-stream", cacheControl: "31536000", upsert: false }));
+  return path;
+}
+function imageField(label, val, onPick, accept = "image/*") {
+  const w = document.createElement("div"); w.className = "f";
+  w.innerHTML = `<label>${esc(label)}</label><div class="row" style="align-items:center">${accept.startsWith("image") ? `<img class="thumb n" ${val ? `src="${esc(IMG(val))}"` : ""}>` : ""}<div><input type="file" accept="${accept}"><div class="hint">${val ? esc(val.split("/").pop()) : "Nothing uploaded"}${accept.startsWith("image") ? " · big images are shrunk automatically" : ""}</div></div>${val ? '<button class="b s d n" type="button">Remove</button>' : ""}</div>`;
+  $("input", w).onchange = async e => { const file = e.target.files[0]; if (!file) return; try { $(".hint", w).textContent = "Uploading…"; const p = await upload(file); onPick(p); const t = $("img", w); if (t) t.src = IMG(p); $(".hint", w).textContent = p.split("/").pop(); } catch (er) { toast(er.message, true); } };
+  const rm = $(".b.d", w); if (rm) rm.onclick = () => { onPick(""); const t = $("img", w); if (t) t.removeAttribute("src"); $(".hint", w).textContent = "Removed (save to apply)"; };
+  return w;
+}
+
+/* ---------- block forms ---------- */
+const TYPES = {
+  header: { n: "Header", sum: d => d.title || d.tagline || "Logo / avatar" },
+  heading: { n: "Section title", sum: d => d.text },
+  button: { n: "Button", sum: d => d.label },
+  card: { n: "Image card", sum: d => d.date_tab || d.title || d.cta },
+  booking: { n: "Booking", sum: d => d.label },
+  signup: { n: "Text signup", sum: d => d.title },
+  locations: { n: "Locations", sum: d => (d.items || []).map(x => x.name).join(" · ") },
+  page_link: { n: "Sub-page link", sum: d => d.title },
+  text: { n: "Text", sum: d => d.heading || String(d.body || "").slice(0, 60) },
+  socials: { n: "Social icons", sum: d => (d.items || []).map(x => x.icon).join(", ") },
+};
+const ICON_OPTS = Object.keys(window.ICONS || {});
+const EVENTS = ["", "Lead", "Schedule", "InitiateCheckout", "Contact", "ViewContent", "FindLocation"];
+const ACTION_KINDS = ["reserve", "book", "order", "delivery", "menu", "directions", "call", "gift", "web", "reviews"];
+const F = {
+  text: (d, k, label, hint, ph) => `<div class="f"><label>${label}</label><input data-k="${k}" value="${esc(d[k])}" ${ph ? `placeholder="${esc(ph)}"` : ""}>${hint ? `<div class="hint">${hint}</div>` : ""}</div>`,
+  area: (d, k, label, hint) => `<div class="f"><label>${label}</label><textarea data-k="${k}">${esc(d[k])}</textarea>${hint ? `<div class="hint">${hint}</div>` : ""}</div>`,
+  sel: (d, k, label, opts) => `<div class="f"><label>${label}</label><select data-k="${k}">${opts.map(o => { const [v, n] = Array.isArray(o) ? o : [o, o || "(none)"]; return `<option value="${esc(v)}" ${String(d[k] ?? "") === v ? "selected" : ""}>${esc(n)}</option>`; }).join("")}</select></div>`,
+  chk: (d, k, label) => `<div class="f"><label style="display:flex;gap:8px;align-items:center;color:var(--text)"><input type="checkbox" data-k="${k}" ${d[k] ? "checked" : ""}>${label}</label></div>`,
+};
+function formFor(b) {
+  const d = b.data || {};
+  switch (b.type) {
+    case "header": return { img: ["image_path", "Logo or photo"], html: F.sel(d, "image_style", "Image style", [["logo", "Logo (as is)"], ["avatar", "Round photo"]]) + F.text(d, "title", "Name (optional if the logo says it)") + F.text(d, "tagline", "Tagline") + F.text(d, "sub", "Small line under it", "Shown in small caps") };
+    case "heading": return { html: F.text(d, "text", "Title") };
+    case "button": return { img: ["image_path", "Banner image (only for Banner style)"], html: F.text(d, "label", "Label") + F.text(d, "note", "Small line under the label") + F.text(d, "url", "Link", "Full https:// link. Start with / for one of this client's sub-pages.") + `<div class="grid2">${F.sel(d, "style", "Style", [["", "Standard"], ["primary", "Accent colour"], ["banner", "Banner image"]])}${F.sel(d, "icon", "Icon", ["", ...ICON_OPTS])}</div>` + F.sel(d, "event", "Pixel event on tap", EVENTS) };
+    case "card": return { img: ["image_path", "Image"], html: F.text(d, "date_tab", "Tab text (bottom left)") + F.text(d, "sub", "Small line in the tab") + `<div class="grid2">${F.text(d, "chip", "Chip (top left)")}${F.text(d, "cta", "Button text", "", "Get tickets")}</div>` + F.text(d, "url", "Link") + `<div class="grid2">${F.sel(d, "event", "Pixel event on tap", EVENTS)}<div>${F.chk(d, "soldout", "Sold out")}</div></div>` };
+    case "booking": return { html: F.text(d, "label", "Button label", "", "Book a session") + F.text(d, "note", "Small line under the label") + F.text(d, "url", "Booking link", "Acuity, Calendly, OpenTable, GHL calendar…") + `<div class="grid2">${F.sel(d, "mode", "Opens", [["", "Over the page (sheet)"], ["link", "New tab"]])}${F.sel(d, "style", "Style", [["", "Accent colour"], ["outline", "Standard"]])}</div>` };
+    case "signup": return { html: F.text(d, "title", "Title", "", "Stay in the loop") + F.area(d, "body", "Intro") + F.text(d, "tag", "Extra GHL tag for this form", "Added on top of the client's default tag and the chosen location") + F.text(d, "done_title", "Done title") + F.text(d, "done_text", "Done message") };
+    case "page_link": return { img: ["image_path", "Thumbnail"], html: F.text(d, "title", "Title") + F.text(d, "sub", "Small line") + F.sel(d, "page_slug", "Opens page", S.pages.filter(p => p.slug).map(p => [p.slug, p.title || p.slug])) };
+    case "text": return { html: F.text(d, "heading", "Heading") + F.area(d, "body", "Body", "New line = paragraph. Lines starting with - are bullets. **bold** and [link](https://…) work.") };
+    case "socials": return { list: "socials" };
+    case "locations": return { list: "locations" };
+  }
+}
+function socialsEditor(d, box) {
+  const items = d.items = (d.items || []).slice();
+  const draw = () => {
+    box.innerHTML = items.map((x, i) => `<div class="row f" data-i="${i}"><select class="n" style="width:140px" data-f="icon">${ICON_OPTS.map(o => `<option ${o === x.icon ? "selected" : ""}>${o}</option>`).join("")}</select><input data-f="url" value="${esc(x.url)}" placeholder="https://instagram.com/…"><button class="b s d n" data-x>×</button></div>`).join("") + `<button class="b s" data-add type="button">+ Add icon</button>`;
+    $$("[data-i]", box).forEach(r => { const x = items[r.dataset.i]; $$("[data-f]", r).forEach(el => el.oninput = () => { x[el.dataset.f] = el.value; if (el.dataset.f === "url" && window.guessIcon) { const g = guessIcon(x); if (g && g !== "web") { x.icon = g; $("select", r).value = g; } } }); $("[data-x]", r).onclick = () => { items.splice(r.dataset.i, 1); draw(); }; });
+    $("[data-add]", box).onclick = () => { items.push({ icon: "instagram", url: "" }); draw(); };
+  };
+  draw();
+}
+function locationsEditor(d, box) {
+  const items = d.items = (d.items || []).map(x => ({ ...x, hours: (x.hours || []).slice(), actions: (x.actions || []).map(a => ({ ...a })) }));
+  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const draw = () => {
+    box.innerHTML = items.map((l, i) => `<div class="sub" data-i="${i}">
+      <div class="row" style="margin-bottom:10px"><b>${esc(l.name || "New location")}</b><span class="n" style="display:flex;gap:6px"><button class="b s n" data-up type="button">↑</button><button class="b s d n" data-x type="button">Remove</button></span></div>
+      <div class="grid2"><div class="f"><label>Name</label><input data-f="name" value="${esc(l.name)}"></div><div class="f"><label>Small line (area)</label><input data-f="area" value="${esc(l.area)}"></div></div>
+      <div class="grid2"><div class="f"><label>Address</label><input data-f="address" value="${esc(l.address)}"></div><div class="f"><label>Phone</label><input data-f="phone" value="${esc(l.phone)}"></div></div>
+      <div class="f"><label>GHL tag for signups picked at this location</label><input data-f="tag" value="${esc(l.tag)}" placeholder="client-location"></div>
+      <div class="f"><label>Hours (blank = closed; e.g. 5pm – 10pm, 11:30am – 11pm)</label><div class="hours">${days.map((n, k) => `<div><div class="hint" style="margin:0 0 3px">${n}</div><input data-h="${k}" value="${esc(l.hours[k])}"></div>`).join("")}</div></div>
+      <label>Buttons (the first one is the big one)</label>
+      ${l.actions.map((a, j) => `<div class="row f" data-j="${j}"><select class="n" style="width:120px" data-a="kind">${ACTION_KINDS.map(o => `<option ${o === a.kind ? "selected" : ""}>${o}</option>`).join("")}</select><input data-a="label" value="${esc(a.label)}" placeholder="Label" style="max-width:160px"><input data-a="url" value="${esc(a.url)}" placeholder="${a.kind === "call" || a.kind === "directions" ? "Optional, uses phone/address" : "https://…"}"><label class="n" title="Open over the page" style="display:flex;gap:4px;align-items:center;margin:0"><input type="checkbox" data-a="sheet" ${a.sheet ? "checked" : ""}>sheet</label><button class="b s n" data-aup type="button">↑</button><button class="b s d n" data-ax type="button">×</button></div>`).join("")}
+      <button class="b s" data-aadd type="button">+ Add button</button></div>`).join("") + `<button class="b s" data-add type="button">+ Add location</button>`;
+    $$("[data-i]", box).forEach(r => {
+      const l = items[r.dataset.i];
+      $$("[data-f]", r).forEach(el => el.oninput = () => { l[el.dataset.f] = el.value; if (el.dataset.f === "name") { l.key = el.value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); } });
+      $$("[data-h]", r).forEach(el => el.oninput = () => { l.hours[+el.dataset.h] = el.value.trim(); });
+      $$("[data-j]", r).forEach(ar => { const a = l.actions[ar.dataset.j]; $$("[data-a]", ar).forEach(el => el.oninput = el.onchange = () => { a[el.dataset.a] = el.type === "checkbox" ? el.checked : el.value; }); $("[data-ax]", ar).onclick = () => { l.actions.splice(ar.dataset.j, 1); draw(); }; $("[data-aup]", ar).onclick = () => { const j = +ar.dataset.j; if (j) { [l.actions[j - 1], l.actions[j]] = [l.actions[j], l.actions[j - 1]]; draw(); } }; });
+      $("[data-aadd]", r).onclick = () => { l.actions.push({ kind: "web", label: "", url: "" }); draw(); };
+      $("[data-x]", r).onclick = () => { if (confirm("Remove this location?")) { items.splice(r.dataset.i, 1); draw(); } };
+      $("[data-up]", r).onclick = () => { const i = +r.dataset.i; if (i) { [items[i - 1], items[i]] = [items[i], items[i - 1]]; draw(); } };
+    });
+    $("[data-add]", box).onclick = () => { items.push({ name: "", hours: [], actions: [{ kind: "reserve", label: "Reserve a table", url: "" }, { kind: "directions", label: "Directions" }, { kind: "call", label: "Call" }] }); draw(); };
+  };
+  draw();
+}
+const toLocal = iso => { if (!iso) return ""; const d = new Date(iso); return new Date(d - d.getTimezoneOffset() * 6e4).toISOString().slice(0, 16); };
+
+function vBlocks() {
+  const v = $("#view");
+  v.innerHTML = `<div class="row" style="margin-bottom:14px;align-items:center"><div><label>Page</label><select id="psel">${S.pages.map(p => `<option value="${p.id}" ${S.page && p.id === S.page.id ? "selected" : ""}>${p.slug ? esc(p.title || p.slug) + " (/" + esc(p.slug) + ")" : "Home"}</option>`).join("")}</select></div><button class="b s n" id="padd">+ Sub-page</button>${S.page && S.page.slug ? '<button class="b s n" id="pedit">Page details</button>' : ""}</div>
+    <div id="pform"></div><div class="blist" id="bl"></div>
+    <div class="add"><span class="k" style="width:100%">Add a block</span>${Object.entries(TYPES).map(([t, x]) => `<button class="b s" data-new="${t}">+ ${x.n}</button>`).join("")}</div>`;
+  $("#psel").onchange = async e => { S.page = S.pages.find(p => p.id === e.target.value); S.open = null; await loadBlocks(); render(); };
+  $("#padd").onclick = async () => {
+    const title = prompt("Sub-page title (e.g. Local Lead Machine)"); if (!title) return;
+    const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 60);
+    try { const p = must(await sb.from("pages").insert({ client_id: S.client.id, slug, title, sort: S.pages.length }).select().single()); S.pages.push(p); S.page = p; S.blocks = []; render(); toast("Page added. Link it from Home with a Sub-page link block."); } catch (e) { toast(e.message, true); }
+  };
+  if ($("#pedit")) $("#pedit").onclick = () => {
+    const p = S.page, box = $("#pform");
+    box.innerHTML = `<div class="ed"><div class="grid2">${F.text(p, "title", "Title")}${F.text(p, "slug", "Address", "/" + "c/" + S.client.slug + "/<this>")}</div>${F.text(p, "description", "Description (for search and link previews)")}${F.sel(p, "parent_slug", "Back button goes to", [["", "Home"], ...S.pages.filter(x => x.slug && x.id !== p.id).map(x => [x.slug, x.title || x.slug])])}<div class="row"><button class="b p n" id="psave">Save page</button><button class="b d n" id="pdel">Delete page</button><span></span></div></div>`;
+    $("#psave").onclick = async () => { const u = {}; $$("[data-k]", box).forEach(el => u[el.dataset.k] = el.value.trim() || (el.dataset.k === "parent_slug" ? null : el.value.trim())); u.slug = u.slug.toLowerCase().replace(/[^a-z0-9-]/g, "-"); try { Object.assign(p, must(await sb.from("pages").update(u).eq("id", p.id).select().single())); render(); toast("Saved"); } catch (e) { toast(e.message, true); } };
+    $("#pdel").onclick = async () => { if (!confirm("Delete this page and its blocks?")) return; try { must(await sb.from("blocks").delete().eq("page_id", p.id)); must(await sb.from("pages").delete().eq("id", p.id)); S.pages = S.pages.filter(x => x.id !== p.id); S.page = S.pages.find(x => !x.slug); await loadBlocks(); render(); } catch (e) { toast(e.message, true); } };
+  };
+  const list = $("#bl");
+  if (!S.blocks.length) list.innerHTML = `<div class="card hint">No blocks on this page yet.</div>`;
+  S.blocks.forEach((b, i) => {
+    const t = TYPES[b.type] || { n: b.type, sum: () => "" }, now = Date.now();
+    const sched = b.start_at && Date.parse(b.start_at) > now ? "Starts " + new Date(b.start_at).toLocaleString() : b.end_at ? (Date.parse(b.end_at) <= now ? "Ended" : "Until " + new Date(b.end_at).toLocaleString()) : "";
+    const row = document.createElement("div"); row.className = "bl" + (b.is_on ? "" : " off");
+    row.innerHTML = `<div class="ord"><button title="Up" ${i ? "" : "disabled"}>▲</button><button title="Down" ${i < S.blocks.length - 1 ? "" : "disabled"}>▼</button></div>
+      <div style="min-width:0"><div class="t">${esc(t.n)}</div><div class="s">${esc(t.sum(b.data || {}) || "—")}</div>${sched ? `<div class="m">${esc(sched)}</div>` : ""}</div>
+      <div class="acts"><label class="n" style="display:flex;gap:5px;align-items:center;margin:0;color:var(--text)" title="Show on page"><input type="checkbox" ${b.is_on ? "checked" : ""}>On</label><button class="b s">${S.open === b.id ? "Close" : "Edit"}</button></div>`;
+    const [up, down] = $$(".ord button", row);
+    up.onclick = () => move(i, -1); down.onclick = () => move(i, 1);
+    $("input", row).onchange = async e => { try { must(await sb.from("blocks").update({ is_on: e.target.checked }).eq("id", b.id)); b.is_on = e.target.checked; row.classList.toggle("off", !b.is_on); reload(); } catch (er) { toast(er.message, true); } };
+    $(".acts .b", row).onclick = () => { S.open = S.open === b.id ? null : b.id; vBlocks(); };
+    list.append(row);
+    if (S.open === b.id) list.append(editor(b));
+  });
+  $$("[data-new]", v).forEach(btn => btn.onclick = async () => {
+    const type = btn.dataset.new, data = type === "locations" ? { items: [] } : type === "socials" ? { items: [] } : type === "signup" ? { title: "Stay in the loop" } : {};
+    try { const b = must(await sb.from("blocks").insert({ client_id: S.client.id, page_id: S.page.id, type, sort: (S.blocks.at(-1)?.sort ?? -1) + 1, data }).select().single()); S.blocks.push(b); S.open = b.id; vBlocks(); reload(); } catch (e) { toast(e.message, true); }
+  });
+}
+async function move(i, dir) {
+  const j = i + dir, a = S.blocks[i], b = S.blocks[j]; if (!b) return;
+  [S.blocks[i], S.blocks[j]] = [b, a];
+  try { await Promise.all(S.blocks.map((x, k) => x.sort === k ? null : sb.from("blocks").update({ sort: k }).eq("id", x.id).then(must).then(() => x.sort = k))); vBlocks(); reload(); } catch (e) { toast(e.message, true); }
+}
+function editor(b) {
+  const d = JSON.parse(JSON.stringify(b.data || {})), spec = formFor(b), box = document.createElement("div"); box.className = "ed";
+  box.innerHTML = `<div id="ef">${spec.html || ""}</div><div id="eimg"></div><div id="elist"></div>
+    <h3>Schedule (optional)</h3><div class="grid2"><div class="f"><label>Show from</label><input type="datetime-local" id="es" value="${toLocal(b.start_at)}"></div><div class="f"><label>Hide after</label><input type="datetime-local" id="ee" value="${toLocal(b.end_at)}"></div></div>
+    <div class="row"><button class="b p n" id="esave">Save</button><button class="b n" id="ecancel">Cancel</button><span></span><button class="b d n" id="edel">Delete block</button></div>`;
+  if (spec.img) $("#eimg", box).append(imageField(spec.img[1], d[spec.img[0]], p => d[spec.img[0]] = p));
+  if (spec.list === "socials") socialsEditor(d, $("#elist", box));
+  if (spec.list === "locations") locationsEditor(d, $("#elist", box));
+  $("#esave", box).onclick = async () => {
+    $$("#ef [data-k]", box).forEach(el => { const v = el.type === "checkbox" ? el.checked : el.value.trim(); if (v === "" || v === false) delete d[el.dataset.k]; else d[el.dataset.k] = v; });
+    const s = $("#es", box).value, e = $("#ee", box).value;
+    try { Object.assign(b, must(await sb.from("blocks").update({ data: d, start_at: s ? new Date(s).toISOString() : null, end_at: e ? new Date(e).toISOString() : null }).eq("id", b.id).select().single())); S.open = null; vBlocks(); reload(); toast("Saved"); } catch (er) { toast(er.message, true); }
+  };
+  $("#ecancel", box).onclick = () => { S.open = null; vBlocks(); };
+  $("#edel", box).onclick = async () => { if (!confirm("Delete this block?")) return; try { must(await sb.from("blocks").delete().eq("id", b.id)); S.blocks = S.blocks.filter(x => x.id !== b.id); S.open = null; vBlocks(); reload(); } catch (er) { toast(er.message, true); } };
+  return box;
+}
+
+/* ---------- theme ---------- */
+const COLOR_KEYS = [["bg", "Background"], ["surface", "Cards"], ["text", "Text"], ["muted", "Soft text"], ["line", "Borders"], ["accent", "Accent"], ["accent_text", "Text on accent"]];
+const DEF = { bg: "#0b0a0b", surface: "#161416", text: "#ffffff", muted: "#a69ea5", line: "#2b272b", accent: "#ff00a7", accent_text: "#ffffff" };
+function vTheme() {
+  const t = JSON.parse(JSON.stringify(S.client.theme || {})); t.colors = t.colors || {}; t.fonts = t.fonts || {};
+  const v = $("#view");
+  const fontBox = role => { const f = t.fonts[role] = t.fonts[role] || { source: "google", family: "Inter", weights: role === "display" ? "600;700;800" : "400;500;600" }; f.files = f.files || [];
+    return `<div class="sub" data-role="${role}"><b>${role === "display" ? "Headings and buttons" : "Body text"}</b>
+      <div class="grid2" style="margin-top:10px"><div class="f"><label>Source</label><select data-ff="source">${[["google", "Google Fonts"], ["upload", "Uploaded font files"], ["system", "System stack"]].map(([v2, n]) => `<option value="${v2}" ${f.source === v2 ? "selected" : ""}>${n}</option>`).join("")}</select></div>
+      <div class="f"><label>Family name</label><input data-ff="family" value="${esc(f.family)}"><div class="hint">Google: exact name, e.g. “Bricolage Grotesque”. Upload: any name you like.</div></div></div>
+      <div class="f g-only"><label>Weights</label><input data-ff="weights" value="${esc(f.weights || "")}" placeholder="400;600;700"></div>
+      <div class="u-only"><label>Font files (.woff2 best)</label>${f.files.map((x, i) => `<div class="row f" data-fi="${i}"><input value="${esc(x.url.split("/").pop())}" disabled><input class="n" style="width:90px" type="number" step="100" min="100" max="900" value="${x.weight || 400}" data-w><select class="n" style="width:100px" data-st><option ${x.style !== "italic" ? "selected" : ""}>normal</option><option ${x.style === "italic" ? "selected" : ""}>italic</option></select><button class="b s d n" data-rm>×</button></div>`).join("")}
+      <input type="file" accept=".woff2,.woff,.ttf,.otf" data-up></div></div>`; };
+  v.innerHTML = `<h2>Look</h2><div class="card">
+    <h3 style="margin-top:0">Colours</h3><div class="grid2">${COLOR_KEYS.map(([k, n]) => `<div class="f"><label>${n}</label><div class="row"><input type="color" class="n" data-c="${k}" value="${esc(/^#[0-9a-f]{6}$/i.test(t.colors[k] || "") ? t.colors[k] : DEF[k])}"><input data-ct="${k}" value="${esc(t.colors[k] || DEF[k])}"></div></div>`).join("")}</div>
+    <h3>Fonts</h3>${fontBox("display")}${fontBox("body")}
+    <h3>Shape</h3><div class="grid2">
+      ${F.sel(t, "button_shape", "Buttons", [["pill", "Pill"], ["rounded", "Rounded"], ["square", "Square"]])}
+      <div class="f"><label>Corner radius (cards)</label><input type="number" min="0" max="32" data-n="radius" value="${t.radius ?? 14}"></div>
+      ${F.sel(t, "heading_case", "Headings", [["upper", "UPPERCASE"], ["none", "As typed"]])}
+      <div class="f"><label>Heading letter spacing (em)</label><input type="number" step="0.01" min="-0.05" max="0.3" data-n="heading_tracking" value="${t.heading_tracking ?? 0}"></div>
+      ${F.sel(t, "card_style", "Card style", [["flat", "Flat"], ["outline", "Outline"], ["raised", "Shadow"]])}
+      <div class="f"><label>Page width (px)</label><input type="number" min="360" max="640" data-n="max_width" value="${t.max_width ?? 460}"></div>
+    </div>${F.chk(t, "texture", "Grain texture on the background")}
+    <button class="b p" id="tsave">Save look</button></div>`;
+  const sync = () => $$("[data-role]", v).forEach(r => { const src = $("[data-ff=source]", r).value; $(".g-only", r).hidden = src !== "google"; $(".u-only", r).hidden = src !== "upload"; });
+  $$("[data-ff=source]", v).forEach(s => s.onchange = sync); sync();
+  $$("[data-c]", v).forEach(el => el.oninput = () => { $(`[data-ct=${el.dataset.c}]`, v).value = el.value; });
+  $$("[data-ct]", v).forEach(el => el.oninput = () => { if (/^#[0-9a-f]{6}$/i.test(el.value)) $(`[data-c=${el.dataset.ct}]`, v).value = el.value; });
+  const collect = () => {
+    COLOR_KEYS.forEach(([k]) => t.colors[k] = $(`[data-ct=${k}]`, v).value.trim());
+    $$("[data-role]", v).forEach(r => { const f = t.fonts[r.dataset.role]; $$("[data-ff]", r).forEach(el => f[el.dataset.ff] = el.value.trim());
+      $$("[data-fi]", r).forEach(row => { const x = f.files[row.dataset.fi]; x.weight = +$("[data-w]", row).value || 400; x.style = $("[data-st]", row).value; }); });
+    $$("#view > .card > .grid2 [data-k]", v).forEach(el => t[el.dataset.k] = el.value);
+    $$("[data-n]", v).forEach(el => t[el.dataset.n] = Number(el.value));
+    t.texture = $("[data-k=texture]", v).checked;
+  };
+  $$("[data-role]", v).forEach(r => {
+    const f = t.fonts[r.dataset.role];
+    $("[data-up]", r).onchange = async e => { const file = e.target.files[0]; if (!file) return; try { collect(); const p = await upload(file, "fonts"); f.files.push({ url: p, weight: /bold|700/i.test(file.name) ? 700 : 400, style: /italic/i.test(file.name) ? "italic" : "normal" }); S.client.theme = t; vTheme(); toast("Font uploaded. Save to apply."); } catch (er) { toast(er.message, true); } };
+    $$("[data-fi] [data-rm]", r).forEach(btn => btn.onclick = () => { collect(); f.files.splice(+btn.closest("[data-fi]").dataset.fi, 1); S.client.theme = t; vTheme(); });
+  });
+  $("#tsave").onclick = async () => { collect(); try { S.client = must(await sb.from("clients").update({ theme: t }).eq("id", S.client.id).select().single()); reload(); toast("Look saved"); } catch (e) { toast(e.message, true); } };
+}
+
+/* ---------- settings ---------- */
+async function vSettings() {
+  const c = S.client, s = JSON.parse(JSON.stringify(c.settings || {})); s.utm = s.utm || {};
+  const v = $("#view");
+  v.innerHTML = `<h2>Settings</h2><div class="card">
+    <div class="grid2">${F.text(c, "name", "Client name")}${F.text(c, "slug", "Preview address", "/c/" + esc(c.slug))}</div>
+    <div class="f"><label>Domains</label><input id="sdom" value="${esc((c.domains || []).join(", "))}" placeholder="bio.client.com"><div class="hint">Point a CNAME for each one to cname.vercel-dns.com, then Fourdots adds it in Vercel.</div></div>
+    ${F.chk(c, "is_live", "Live (lets search engines index the page)")}
+    <h3>Signups and tracking</h3><div class="grid2">${F.text(s, "default_tag", "Default GHL tag", "Every signup gets this tag")}${F.text(s, "pixel_id", "Meta pixel ID")}</div>
+    <div class="grid2">${F.text(s, "tz", "Time zone", "", "America/Toronto")}<div></div></div>
+    ${F.area(s, "consent_text", "Consent line under the phone field", "Leave blank for the standard wording with the client's name.")}
+    <h3>Link tagging (UTM)</h3><div class="grid2"><div class="f"><label style="display:flex;gap:8px;align-items:center;color:var(--text)"><input type="checkbox" id="uon" ${s.utm.enabled === false ? "" : "checked"}>Add UTM tags to outbound links</label></div><div></div>
+    <div class="f"><label>utm_source</label><input data-u="source" value="${esc(s.utm.source || "")}" placeholder="instagram"></div><div class="f"><label>utm_medium</label><input data-u="medium" value="${esc(s.utm.medium || "")}" placeholder="social"></div>
+    <div class="f"><label>utm_campaign</label><input data-u="campaign" value="${esc(s.utm.campaign || "")}" placeholder="link_in_bio"></div></div>
+    <h3>Search and sharing</h3>${F.text(s, "seo_title", "Page title")}${F.area(s, "seo_description", "Description")}
+    <div id="simg"></div>${F.chk(s, "hide_footer", "Hide “Made by Fourdots”")}
+    <button class="b p" id="ssave">Save settings</button></div>
+    <div class="card" style="margin-top:16px" id="ghl"><h2>GoHighLevel</h2><div class="hint">Loading…</div></div>`;
+  $("#simg").append(imageField("Favicon (square PNG)", s.favicon_path, p => s.favicon_path = p), imageField("Share image (1200×630)", s.og_image_path, p => s.og_image_path = p));
+  $("#ssave").onclick = async () => {
+    const box = v.querySelector(".card");
+    const u = { name: $("[data-k=name]", box).value.trim(), slug: $("[data-k=slug]", box).value.trim().toLowerCase(), is_live: $("[data-k=is_live]", box).checked,
+      domains: $("#sdom").value.split(/[\s,]+/).map(x => x.trim().toLowerCase().replace(/^https?:\/\//, "").replace(/\/.*$/, "")).filter(Boolean) };
+    ["default_tag", "pixel_id", "tz", "consent_text", "seo_title", "seo_description"].forEach(k => { const val = $(`[data-k=${k}]`, box).value.trim(); if (val) s[k] = val; else delete s[k]; });
+    s.hide_footer = $("[data-k=hide_footer]", box).checked;
+    s.utm = { enabled: $("#uon").checked }; $$("[data-u]", box).forEach(el => { if (el.value.trim()) s.utm[el.dataset.u] = el.value.trim(); });
+    s.domains_for_utm = u.domains;
+    u.settings = s;
+    try { S.client = must(await sb.from("clients").update(u).eq("id", c.id).select().single()); S.me = must(await sb.rpc("whoami")); const cur = S.client.id; $("#csel").innerHTML = S.me.clients.map(x => `<option value="${x.id}">${esc(x.name)}</option>`).join(""); $("#csel").value = cur; history.replaceState(null, "", "?c=" + S.client.slug); reload(); toast("Settings saved"); } catch (e) { toast(e.message, true); }
+  };
+  const g = $("#ghl");
+  try {
+    const st = must(await sb.rpc("ghl_status", { p_client: c.id })) || {};
+    g.innerHTML = `<h2>GoHighLevel</h2><p>${st.connected ? `<span class="pill good">Connected</span> token ending ${esc(st.pit_tail)} · location ${esc(st.location_id || "not set")}` : '<span class="pill bad">Not connected</span> Signups are still saved here and can be exported.'}</p>
+      ${S.me.admin ? `<div class="grid2"><div class="f"><label>Private Integration Token</label><input id="gpit" type="password" autocomplete="off" placeholder="${st.connected ? "Leave blank to keep the current token" : "pit-…"}"><div class="hint">Scopes: contacts read/write. Stored server-side; never shown again.</div></div>
+      <div class="f"><label>Location ID</label><input id="gloc" value="${esc(st.location_id || "")}"></div></div><button class="b p" id="gsave">Save connection</button>` : '<p class="hint">Only Fourdots admins can change the connection.</p>'}`;
+    if ($("#gsave")) $("#gsave").onclick = async () => { try { must(await sb.rpc("set_ghl", { p_client: c.id, p_pit: $("#gpit").value.trim(), p_location: $("#gloc").value.trim() })); toast("GHL connection saved"); vSettings(); } catch (e) { toast(e.message, true); } };
+  } catch (e) { g.innerHTML = `<h2>GoHighLevel</h2><p class="hint">${esc(e.message)}</p>`; }
+}
+
+/* ---------- signups ---------- */
+async function vSignups() {
+  const v = $("#view"); v.innerHTML = `<h2>Signups</h2><div class="card hint">Loading…</div>`;
+  try {
+    const rows = must(await sb.from("signups").select("*").eq("client_id", S.client.id).order("created_at", { ascending: false }).limit(2000));
+    v.innerHTML = `<div class="row" style="align-items:center;margin-bottom:12px"><h2 style="margin:0">Signups <span class="hint">(${rows.length})</span></h2><button class="b s n" id="csv">Download CSV</button></div>
+      <div class="card" style="padding:0;overflow-x:auto"><table class="t"><tr><th>When</th><th>Phone</th><th>Email</th><th>Name</th><th>Tags</th><th>GHL</th></tr>
+      ${rows.map(r => `<tr><td>${new Date(r.created_at).toLocaleString()}</td><td>${esc(r.phone)}</td><td>${esc(r.email || "")}</td><td>${esc(r.first_name || "")}</td><td>${esc((r.tags || []).join(", "))}</td><td><span class="pill ${r.ghl_status === "synced" ? "good" : r.ghl_status === "error" ? "bad" : ""}">${esc(r.ghl_status || "")}</span></td></tr>`).join("") || '<tr><td colspan="6" class="hint">No signups yet.</td></tr>'}</table></div>`;
+    $("#csv").onclick = () => {
+      const q = x => `"${String(x ?? "").replace(/"/g, '""')}"`;
+      const csv = ["created_at,phone,email,first_name,tags,ghl_status", ...rows.map(r => [r.created_at, r.phone, r.email, r.first_name, (r.tags || []).join(" "), r.ghl_status].map(q).join(","))].join("\n");
+      const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" })); a.download = `${S.client.slug}-signups.csv`; a.click();
+    };
+  } catch (e) { v.innerHTML = `<div class="card">${esc(e.message)}</div>`; }
+}
+
+/* ---------- stats ---------- */
+async function vStats() {
+  const v = $("#view"); v.innerHTML = `<h2>Last 30 days</h2><div class="card hint">Loading…</div>`;
+  try {
+    const s = must(await sb.rpc("client_stats", { p_client: S.client.id, p_days: 30 }));
+    const ctr = s.views ? Math.round(s.clicks / s.views * 100) : 0;
+    v.innerHTML = `<h2>Last 30 days</h2><div class="stats"><div class="card"><span class="k">Page views</span><b>${s.views}</b></div><div class="card"><span class="k">Taps</span><b>${s.clicks}</b><span class="hint">${ctr}% of views</span></div><div class="card"><span class="k">Signups</span><b>${s.leads}</b></div></div>
+      <div class="card" style="padding:0;overflow-x:auto"><table class="t"><tr><th>Most tapped</th><th style="text-align:right">Taps</th></tr>${(s.top || []).map(r => `<tr><td style="word-break:break-all">${esc(String(r.target).replace(/[?&]utm_[^&]+/g, "").replace(/\?$/, ""))}</td><td style="text-align:right">${r.n}</td></tr>`).join("") || '<tr><td colspan="2" class="hint">No taps yet.</td></tr>'}</table></div>`;
+  } catch (e) { v.innerHTML = `<h2>Stats</h2><div class="card hint">${esc(e.message)}</div>`; }
+}
+
+/* ---------- team ---------- */
+async function vTeam() {
+  const v = $("#view"); v.innerHTML = `<h2>Team</h2><div class="card hint">Loading…</div>`;
+  try {
+    const rows = must(await sb.from("team").select("*").eq("client_id", S.client.id).order("added_at"));
+    v.innerHTML = `<h2>Team for ${esc(S.client.name)}</h2><div class="card"><p class="hint" style="margin-top:0">People here can edit this client's page and see signups. They sign in at this address with “First time? Set password”. Fourdots admins see every client.</p>
+      <table class="t">${rows.map(r => `<tr><td>${esc(r.email)}</td><td style="text-align:right"><button class="b s d" data-rm="${r.id}">Remove</button></td></tr>`).join("") || '<tr><td class="hint">Nobody yet.</td></tr>'}</table>
+      <div class="row" style="margin-top:14px"><input id="temail" type="email" placeholder="name@client.com"><button class="b p n" id="tadd">Add</button></div></div>`;
+    $("#tadd").onclick = async () => { const email = $("#temail").value.trim().toLowerCase(); if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return toast("Enter an email", true); try { must(await sb.from("team").insert({ client_id: S.client.id, email, role: "editor" })); vTeam(); toast("Added"); } catch (e) { toast(e.message, true); } };
+    $$("[data-rm]", v).forEach(b => b.onclick = async () => { if (!confirm("Remove this person?")) return; try { must(await sb.from("team").delete().eq("id", b.dataset.rm)); vTeam(); } catch (e) { toast(e.message, true); } });
+  } catch (e) { v.innerHTML = `<div class="card">${esc(e.message)}</div>`; }
+}
+
+sb.auth.onAuthStateChange(ev => { if (ev === "SIGNED_OUT") { $("#app").hidden = true; $("#login").hidden = false; } });
+boot().catch(e => toast(e.message, true));
+})();
+</script>
+</body>
+</html>

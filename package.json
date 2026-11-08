@@ -1,0 +1,7 @@
+{
+  "name": "fourdots-links",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Fourdots Links: branded link-in-bio pages for Fourdots clients",
+  "engines": { "node": ">=20" }
+}
