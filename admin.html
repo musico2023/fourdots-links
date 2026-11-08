@@ -212,6 +212,8 @@ const F = {
   text: (d, k, label, hint, ph) => `<div class="f"><label>${label}</label><input data-k="${k}" value="${esc(d[k])}" ${ph ? `placeholder="${esc(ph)}"` : ""}>${hint ? `<div class="hint">${hint}</div>` : ""}</div>`,
   area: (d, k, label, hint) => `<div class="f"><label>${label}</label><textarea data-k="${k}">${esc(d[k])}</textarea>${hint ? `<div class="hint">${hint}</div>` : ""}</div>`,
   sel: (d, k, label, opts) => `<div class="f"><label>${label}</label><select data-k="${k}">${opts.map(o => { const [v, n] = Array.isArray(o) ? o : [o, o || "(none)"]; return `<option value="${esc(v)}" ${String(d[k] ?? "") === v ? "selected" : ""}>${esc(n)}</option>`; }).join("")}</select></div>`,
+  days: (d, k, label, hint) => `<div class="f"><label>${label}</label><div style="display:flex;gap:6px;flex-wrap:wrap">${["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((n, i) => `<label style="display:flex;gap:4px;align-items:center;margin:0;color:var(--text);border:1px solid var(--line);border-radius:6px;padding:5px 8px"><input type="checkbox" data-arr="${k}" value="${i}" ${(d[k] || []).map(Number).includes(i) ? "checked" : ""}>${n}</label>`).join("")}</div>${hint ? `<div class="hint">${hint}</div>` : ""}</div>`,
+  locs: (d, k, label, hint) => { const ls = (S.blocks.find(b => b.type === "locations")?.data?.items || []).filter(x => x.name); if (!ls.length) return ""; return `<div class="f"><label>${label}</label><div style="display:flex;gap:6px;flex-wrap:wrap">${ls.map((l, i) => { const key = l.key || String(i); return `<label style="display:flex;gap:4px;align-items:center;margin:0;color:var(--text);border:1px solid var(--line);border-radius:6px;padding:5px 8px"><input type="checkbox" data-arr="${k}" data-str value="${esc(key)}" ${(d[k] || []).includes(key) ? "checked" : ""}>${esc(l.name)}</label>`; }).join("")}</div>${hint ? `<div class="hint">${hint}</div>` : ""}</div>`; },
   chk: (d, k, label) => `<div class="f"><label style="display:flex;gap:8px;align-items:center;color:var(--text)"><input type="checkbox" data-k="${k}" ${d[k] ? "checked" : ""}>${label}</label></div>`,
 };
 function formFor(b) {
@@ -220,7 +222,10 @@ function formFor(b) {
     case "header": return { img: ["image_path", "Logo or photo"], html: F.sel(d, "image_style", "Image style", [["logo", "Logo (as is)"], ["avatar", "Round photo"]]) + F.sel(d, "tint", "Logo colour", [["", "As uploaded"], ["dark", "Make it dark (for light backgrounds)"], ["light", "Make it white (for dark backgrounds)"]]) + F.text(d, "title", "Name (optional if the logo says it)") + F.area(d, "tagline", "Tagline", "Press Enter where you want the line to break.") + F.text(d, "sub", "Small line under it", "Shown in small caps") };
     case "heading": return { html: F.text(d, "text", "Title") };
     case "button": return { img: ["image_path", "Banner image (only for Banner style)"], html: F.text(d, "label", "Label") + F.text(d, "note", "Small line under the label") + F.text(d, "url", "Link", "Full https:// link. Start with / for one of this client's sub-pages.") + `<div class="grid2">${F.sel(d, "style", "Style", [["", "Standard"], ["primary", "Accent colour"], ["banner", "Banner image"]])}${F.sel(d, "icon", "Icon", ["", ...ICON_OPTS])}</div>` + F.sel(d, "event", "Pixel event on tap", EVENTS) };
-    case "card": return { img: ["image_path", "Image"], html: F.text(d, "date_tab", "Tab text (bottom left)") + F.text(d, "sub", "Small line in the tab") + `<div class="grid2">${F.text(d, "chip", "Chip (top left)")}${F.text(d, "cta", "Button text", "", "Get tickets")}</div>` + F.text(d, "url", "Link") + `<div class="grid2">${F.sel(d, "event", "Pixel event on tap", EVENTS)}<div>${F.chk(d, "soldout", "Sold out")}</div></div>` };
+    case "card": return { img: ["image_path", "Image"], html: F.text(d, "date_tab", "Tab text (bottom left)") + F.text(d, "sub", "Small line in the tab") + `<div class="grid2">${F.text(d, "chip", "Chip (top left)")}${F.text(d, "cta", "Button text", "", "Get tickets")}</div>` + F.text(d, "url", "Link") + `<div class="grid2">${F.sel(d, "event", "Pixel event on tap", EVENTS)}<div>${F.chk(d, "soldout", "Sold out")}</div></div>`
+      + `<h3>Days and locations</h3>` + F.days(d, "days", "Only show on", "Leave all unticked to show every day. Ticked days make this a special: it shows only then and goes first.")
+      + F.days(d, "feature_days", "Push to the top on", "For things that run all week but matter more on some days, like brunch on the weekend.")
+      + F.locs(d, "locs", "Locations", "Cards for the location a visitor picked move ahead of the other location's cards. Leave unticked for both.") };
     case "booking": return { html: F.text(d, "label", "Button label", "", "Book a session") + F.text(d, "note", "Small line under the label") + F.text(d, "url", "Booking link", "Acuity, Calendly, OpenTable, GHL calendar…") + `<div class="grid2">${F.sel(d, "mode", "Opens", [["", "Over the page (sheet)"], ["link", "New tab"]])}${F.sel(d, "style", "Style", [["", "Accent colour"], ["outline", "Standard"]])}</div>` };
     case "signup": return { html: F.text(d, "title", "Title", "", "Stay in the loop") + F.area(d, "body", "Intro") + F.text(d, "tag", "Extra GHL tag for this form", "Added on top of the client's default tag and the chosen location") + F.text(d, "done_title", "Done title") + F.text(d, "done_text", "Done message") };
     case "page_link": return { img: ["image_path", "Thumbnail"], html: F.text(d, "title", "Title") + F.text(d, "sub", "Small line") + F.sel(d, "page_slug", "Opens page", S.pages.filter(p => p.slug).map(p => [p.slug, p.title || p.slug])) };
@@ -287,7 +292,10 @@ function vBlocks() {
   if (!S.blocks.length) list.innerHTML = `<div class="card hint">No blocks on this page yet.</div>`;
   S.blocks.forEach((b, i) => {
     const t = TYPES[b.type] || { n: b.type, sum: () => "" }, now = Date.now();
-    const sched = b.start_at && Date.parse(b.start_at) > now ? "Starts " + new Date(b.start_at).toLocaleString() : b.end_at ? (Date.parse(b.end_at) <= now ? "Ended" : "Until " + new Date(b.end_at).toLocaleString()) : "";
+    const DN = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], bd = b.data || {};
+    const sched = [b.start_at && Date.parse(b.start_at) > now ? "Starts " + new Date(b.start_at).toLocaleString() : b.end_at ? (Date.parse(b.end_at) <= now ? "Ended" : "Until " + new Date(b.end_at).toLocaleString()) : "",
+      (bd.days || []).length ? "Only " + bd.days.map(n => DN[n]).join(", ") : "", (bd.feature_days || []).length ? "Top on " + bd.feature_days.map(n => DN[n]).join(", ") : "",
+      (bd.locs || []).length ? bd.locs.join(", ") : ""].filter(Boolean).join(" · ");
     const row = document.createElement("div"); row.className = "bl" + (b.is_on ? "" : " off");
     row.innerHTML = `<div class="ord"><button title="Up" ${i ? "" : "disabled"}>▲</button><button title="Down" ${i < S.blocks.length - 1 ? "" : "disabled"}>▼</button></div>
       <div style="min-width:0"><div class="t">${esc(t.n)}</div><div class="s">${esc(t.sum(b.data || {}) || "—")}</div>${sched ? `<div class="m">${esc(sched)}</div>` : ""}</div>
@@ -319,6 +327,10 @@ function editor(b) {
   if (spec.list === "locations") locationsEditor(d, $("#elist", box));
   $("#esave", box).onclick = async () => {
     $$("#ef [data-k]", box).forEach(el => { const v = el.type === "checkbox" ? el.checked : el.value.trim(); if (v === "" || v === false) delete d[el.dataset.k]; else d[el.dataset.k] = v; });
+    [...new Set($$("#ef [data-arr]", box).map(el => el.dataset.arr))].forEach(k => {
+      const vals = $$(`#ef [data-arr="${k}"]:checked`, box).map(el => el.dataset.str != null ? el.value : Number(el.value));
+      if (vals.length) d[k] = vals; else delete d[k];
+    });
     const s = $("#es", box).value, e = $("#ee", box).value;
     try { Object.assign(b, must(await sb.from("blocks").update({ data: d, start_at: s ? new Date(s).toISOString() : null, end_at: e ? new Date(e).toISOString() : null }).eq("id", b.id).select().single())); S.open = null; vBlocks(); reload(); toast("Saved"); } catch (er) { toast(er.message, true); }
   };

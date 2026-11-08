@@ -14,11 +14,33 @@
   };
 
   /* schedules: cards appear and disappear on time without a reload */
+  const nums = v => String(v || "").split(",").filter(x => x !== "").map(Number);
+  const todayDow = () => tzParts().day;
   function schedule() {
-    const now = Date.now();
-    $$("[data-s],[data-e]").forEach(el => {
+    const now = Date.now(), day = todayDow();
+    $$("[data-s],[data-e],[data-days]").forEach(el => {
       const s = el.dataset.s ? Date.parse(el.dataset.s) : null, e = el.dataset.e ? Date.parse(el.dataset.e) : null;
-      el.hidden = !((!s || s <= now) && (!e || e > now));
+      const days = nums(el.dataset.days);
+      el.hidden = !((!s || s <= now) && (!e || e > now) && (!days.length || days.includes(day)));
+    });
+    rankCards();
+  }
+  /* day specials: today's specials first, then cards featured today, then the visitor's location before the other one */
+  function rankCards() {
+    const day = todayDow(), loc = window.LINKS_LOCKEY || "";
+    const cards = $$("a.card[data-b]"); if (cards.length < 2) return;
+    const runs = []; let cur = [];
+    cards.forEach(c => { if (cur.length && cur[cur.length - 1].nextElementSibling !== c) { runs.push(cur); cur = []; } cur.push(c); });
+    if (cur.length) runs.push(cur);
+    runs.forEach(run => {
+      if (run.length < 2) return;
+      if (!run[0].dataset.k) run.forEach((c, i) => c.dataset.k = i);
+      const score = c => { const d = nums(c.dataset.days), f = nums(c.dataset.feat), l = String(c.dataset.locs || "").split(",").filter(Boolean);
+        return (d.length && d.includes(day) ? 4 : 0) + (f.includes(day) ? 2 : 0) + (loc && l.length ? (l.includes(loc) ? 1 : -1) : 0); };
+      const sorted = run.slice().sort((a, b) => score(b) - score(a) || a.dataset.k - b.dataset.k);
+      if (sorted.every((c, i) => c === run[i])) return;
+      const anchor = run[run.length - 1].nextSibling, parent = run[0].parentNode;
+      sorted.forEach(c => parent.insertBefore(c, anchor));
     });
   }
   setInterval(schedule, 60000);
@@ -84,6 +106,7 @@
       pans.forEach(p => { p.hidden = p.dataset.pan !== key; if (!p.hidden) paint(p); });
       segs.forEach(b => { b.classList.toggle("on", b.dataset.loc === key); b.setAttribute("aria-selected", b.dataset.loc === key); });
       window.LINKS_LOC = (pans.find(p => p.dataset.pan === key) || {}).dataset?.tag || "";
+      window.LINKS_LOCKEY = key; rankCards();
     };
     segs.forEach(b => b.onclick = () => { pick(b.dataset.loc); store.set("links_loc_" + L.c, b.dataset.loc); });
     const saved = store.get("links_loc_" + L.c);
@@ -189,4 +212,6 @@
     q(".skip").onclick = () => { if (step === STEPS.length - 1) return done(); step++; show(); };
     show();
   });
+
+  schedule(); // fixes up a cached page that crossed midnight, and applies day/location ranking
 })();
