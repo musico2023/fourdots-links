@@ -35,7 +35,7 @@
     runs.forEach(run => {
       if (run.length < 2) return;
       if (!run[0].dataset.k) run.forEach((c, i) => c.dataset.k = i);
-      const score = c => { const d = nums(c.dataset.days), f = nums(c.dataset.feat), l = String(c.dataset.locs || "").split(",").filter(Boolean);
+      const score = c => { const d = nums(c.dataset.days), f = nums(c.dataset.feat), l = String(c.dataset.at || "").split(",").filter(Boolean);
         return (d.length && d.includes(day) ? 4 : 0) + (f.includes(day) ? 2 : 0) + (loc && l.length ? (l.includes(loc) ? 1 : -1) : 0); };
       const sorted = run.slice().sort((a, b) => score(b) - score(a) || a.dataset.k - b.dataset.k);
       if (sorted.every((c, i) => c === run[i])) return;
