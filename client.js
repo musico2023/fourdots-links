@@ -91,6 +91,48 @@
     setInterval(() => pans.filter(p => !p.hidden).forEach(paint), 60000);
   });
 
+  /* reservation picker: guests, day and time from this location's hours, then the booking page opens prefilled */
+  const pad = n => String(n).padStart(2, "0");
+  const fmtT = m => { const h = Math.floor(m / 60), mm = m % 60; return `${h % 12 || 12}:${pad(mm)} ${h < 12 ? "am" : "pm"}`; };
+  $$("[data-rsv]").forEach(f => {
+    const pan = f.closest("[data-pan]"), a = $("a", f), base = f.dataset.rsv;
+    let hours = []; try { hours = JSON.parse((pan && pan.dataset.hours) || "[]"); } catch {}
+    const [P, D, T] = ["p", "d", "t"].map(n => $(`select[name=${n}]`, f));
+    P.innerHTML = Array.from({ length: 12 }, (_, i) => `<option value="${i + 1}" ${i === 1 ? "selected" : ""}>${i + 1}</option>`).join("") + `<option value="13">13+</option>`;
+    const parts = new Intl.DateTimeFormat("en-CA", { timeZone: L.tz || "America/Toronto", year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(new Date());
+    const g = k => +(parts.find(x => x.type === k) || {}).value;
+    const today = Date.UTC(g("year"), g("month") - 1, g("day")), nowM = tzParts().mins;
+    const slots = (dow, isToday) => {
+      const s = span(hours[dow]); if (!s) return [];
+      const out = []; for (let m = Math.ceil(s[0] / 30) * 30; m <= Math.min(s[1] - 60, 1410); m += 30) if (!isToday || m > nowM + 30) out.push(m);
+      return out;
+    };
+    const days = [];
+    for (let i = 0; i < 21 && days.length < 14; i++) {
+      const d = new Date(today + i * 864e5), dow = d.getUTCDay(), s = slots(dow, i === 0);
+      if (!s.length) continue;
+      const label = i === 0 ? "Today" : i === 1 ? "Tomorrow" : d.toLocaleDateString("en-US", { timeZone: "UTC", weekday: "short", month: "short", day: "numeric" });
+      days.push({ iso: d.toISOString().slice(0, 10), label, s });
+    }
+    if (!days.length) { f.querySelector(".rsel").hidden = true; return; }
+    D.innerHTML = days.map((d, i) => `<option value="${i}">${esc(d.label)}</option>`).join("");
+    const fillT = keep => {
+      const s = days[+D.value].s, want = keep != null && s.includes(keep) ? keep : s.includes(1140) ? 1140 : (s.find(m => m >= 1080) ?? s[0]);
+      T.innerHTML = s.map(m => `<option value="${m}" ${m === want ? "selected" : ""}>${fmtT(m)}</option>`).join("");
+    };
+    const update = () => {
+      try {
+        const d = days[+D.value], m = +T.value, dt = `${d.iso}T${pad(Math.floor(m / 60))}:${pad(m % 60)}:00`;
+        const u = new URL(base);
+        u.searchParams.set("covers", P.value); u.searchParams.set("dateTime", dt); u.searchParams.set("p", P.value); u.searchParams.set("sd", dt);
+        a.href = u.toString();
+      } catch {}
+    };
+    D.onchange = () => { fillT(+T.value); update(); };
+    P.onchange = T.onchange = update;
+    fillT(); update();
+  });
+
   /* stepped signup: phone, then email, then first name; each step saves on its own */
   const STEPS = [
     { key: "phone", k: "Step 1 of 3", type: "tel", mode: "tel", ac: "tel", ph: "(416) 555-0123", btn: "Continue" },
