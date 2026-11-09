@@ -77,7 +77,7 @@ h2{margin:0 0 14px;font-size:18px}h3{margin:18px 0 10px;font-size:14px}
     <select id="csel" aria-label="Client"></select>
     <button class="b s" id="newc" hidden>+ New client</button>
     <span class="sp"></span>
-    <a class="b s" id="viewp" target="_blank" rel="noopener">Open page ↗</a>
+    <select id="pday" class="b s" title="Preview the page as it looks on this day" style="width:auto;padding:5px 8px" aria-label="Preview as day"><option value="">Today</option><option value="0">Sunday</option><option value="1">Monday</option><option value="2">Tuesday</option><option value="3">Wednesday</option><option value="4">Thursday</option><option value="5">Friday</option><option value="6">Saturday</option></select><button class="b s" id="pvopen" type="button">Preview ↗</button><a class="b s" id="viewp" target="_blank" rel="noopener">Open page ↗</a>
     <span class="hint" id="who"></span>
     <button class="b s" id="out">Sign out</button>
   </header>
@@ -87,7 +87,7 @@ h2{margin:0 0 14px;font-size:18px}h3{margin:18px 0 10px;font-size:14px}
   </nav>
   <div class="main" id="main">
     <div id="view"></div>
-    <aside class="pv" id="pv"><div class="bar"><span class="k">Live preview</span><button class="b s" id="rl">Reload</button></div><iframe id="frame" title="Preview"></iframe></aside>
+    <aside class="pv" id="pv"><div class="bar"><span class="k">Live preview</span><span style="display:flex;gap:6px"><button class="b s" id="rl">Reload</button></span></div><iframe id="frame" title="Preview"></iframe></aside>
   </div>
 </section>
 
@@ -157,8 +157,10 @@ async function loadClient(id) {
   await loadBlocks(); render();
 }
 async function loadBlocks() { S.blocks = S.page ? must(await sb.from("blocks").select("*").eq("page_id", S.page.id).order("sort")) : []; }
-const reload = () => { const f = $("#frame"); f.src = `/c/${S.client.slug}${S.page && S.page.slug ? "/" + S.page.slug : ""}?t=${Date.now()}`; };
-$("#rl").onclick = reload;
+const previewUrl = () => { const d = $("#pday") ? $("#pday").value : ""; return `/c/${S.client.slug}${S.page && S.page.slug ? "/" + S.page.slug : ""}?t=${Date.now()}${d ? "&day=" + d : ""}`; };
+const reload = () => { $("#frame").src = previewUrl(); };
+$("#rl").onclick = reload; $("#pday").onchange = reload;
+$("#pvopen").onclick = () => window.open(previewUrl(), "_blank");
 $$("#tabs button").forEach(b => b.onclick = () => { S.tab = b.dataset.t; $$("#tabs button").forEach(x => x.classList.toggle("on", x === b)); render(); });
 function render() {
   $("#main").classList.toggle("full", ["signups", "stats", "team"].includes(S.tab)); $("#pv").hidden = ["signups", "stats", "team"].includes(S.tab);

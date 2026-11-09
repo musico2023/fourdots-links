@@ -15,7 +15,7 @@
 
   /* schedules: cards appear and disappear on time without a reload */
   const nums = v => String(v || "").split(",").filter(x => x !== "").map(Number);
-  const todayDow = () => tzParts().day;
+  const todayDow = () => (Number.isInteger(L.day) ? L.day : tzParts().day);
   function schedule() {
     const now = Date.now(), day = todayDow();
     $$("[data-s],[data-e],[data-days]").forEach(el => {

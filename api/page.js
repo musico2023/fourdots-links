@@ -29,7 +29,8 @@ module.exports = async (req, res) => {
     const preview = !!m || (req.query && req.query.preview);
     // Short shared cache: schedules flip within a minute, edits show within ~30s.
     res.setHeader("Cache-Control", preview ? "no-store" : "public, s-maxage=30, stale-while-revalidate=300");
-    return res.end(renderPage(data, { base, preview }));
+    const qd = preview && req.query && /^[0-6]$/.test(String(req.query.day || "")) ? +req.query.day : undefined;
+    return res.end(renderPage(data, { base, preview, day: qd }));
   } catch (e) {
     console.error(e);
     res.statusCode = 500;
