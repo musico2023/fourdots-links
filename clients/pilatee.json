@@ -5,7 +5,7 @@
     "domains": [
       "bio.pilatee.ca"
     ],
-    "is_live": false,
+    "is_live": true,
     "theme": {
       "colors": {
         "bg": "#F4F2EC",
@@ -85,14 +85,14 @@
     {
       "type": "heading",
       "data": {
-        "text": "New here?"
+        "text": "First time at Pilatee?"
       }
     },
     {
       "type": "button",
       "data": {
         "label": "Find your spice level",
-        "note": "New to Pilatee? Two weeks unlimited, both studios, $100 + HST.",
+        "note": "New clients only · 2 weeks for $100 + HST",
         "url": "https://spice.pilatee.ca/?utm_source=instagram&utm_medium=social&utm_campaign=link_in_bio",
         "style": "primary",
         "event": "ViewContent"
@@ -125,7 +125,7 @@
     {
       "type": "button",
       "data": {
-        "label": "Class packs and memberships",
+        "label": "Packs and memberships",
         "url": "https://www.pilatee.ca/packages-pricing",
         "icon": "bag",
         "event": "ViewContent"
