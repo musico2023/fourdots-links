@@ -22,6 +22,7 @@
     truck: { n: "Delivery", s: SV('<path d="M3 6h11v10H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/>') },
     gift: { n: "Gift", s: SV('<rect x="3" y="8" width="18" height="5" rx="1"/><path d="M5 13v8h14v-8M12 8v13M12 8C10 4 7 4.5 7 6.5S10 8 12 8Zm0 0c2-4 5-3.5 5-1.5S14 8 12 8Z"/>') },
     star: { n: "Star", s: SV('<path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8L12 3Z"/>') },
+    app: { n: "App", s: SV('<rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M10.5 18.5h3"/>') },
     arrow: { n: "Arrow", s: SV('<path d="M7 17 17 7M8 7h9v9"/>') },
   };
   const guessIcon = x => {

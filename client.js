@@ -213,5 +213,7 @@
     show();
   });
 
+  /* app buttons: Play Store link on Android, App Store everywhere else */
+  if (/Android/i.test(navigator.userAgent)) $$("[data-android]").forEach(a => { a.href = a.dataset.android; });
   schedule(); // fixes up a cached page that crossed midnight, and applies day/location ranking
 })();

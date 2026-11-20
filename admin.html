@@ -223,7 +223,7 @@ function formFor(b) {
   switch (b.type) {
     case "header": return { img: ["image_path", "Logo or photo"], html: F.sel(d, "image_style", "Image style", [["logo", "Logo (as is)"], ["avatar", "Round photo"]]) + F.sel(d, "tint", "Logo colour", [["", "As uploaded"], ["dark", "Make it dark (for light backgrounds)"], ["light", "Make it white (for dark backgrounds)"]]) + F.text(d, "title", "Name (optional if the logo says it)") + F.area(d, "tagline", "Tagline", "Press Enter where you want the line to break.") + F.text(d, "sub", "Small line under it", "Shown in small caps") };
     case "heading": return { html: F.text(d, "text", "Title") };
-    case "button": return { img: ["image_path", "Banner image (only for Banner style)"], html: F.text(d, "label", "Label") + F.text(d, "note", "Small line under the label") + F.text(d, "url", "Link", "Full https:// link. Start with / for one of this client's sub-pages.") + `<div class="grid2">${F.sel(d, "style", "Style", [["", "Standard"], ["primary", "Accent colour"], ["banner", "Banner image"]])}${F.sel(d, "icon", "Icon", ["", ...ICON_OPTS])}</div>` + F.sel(d, "event", "Pixel event on tap", EVENTS) };
+    case "button": return { img: ["image_path", "Banner image (only for Banner style)"], html: F.text(d, "label", "Label") + F.text(d, "note", "Small line under the label") + F.text(d, "url", "Link", "Full https:// link. Start with / for one of this client's sub-pages.") + F.text(d, "android_url", "Android link (optional)", "For app buttons: App Store link above, Play Store link here. Android phones get this one.") + `<div class="grid2">${F.sel(d, "style", "Style", [["", "Standard"], ["primary", "Accent colour"], ["banner", "Banner image"]])}${F.sel(d, "icon", "Icon", ["", ...ICON_OPTS])}</div>` + F.sel(d, "event", "Pixel event on tap", EVENTS) };
     case "card": return { img: ["image_path", "Image"], html: F.sel(d, "focus", "Image crop", [["", "Centre"], ["top", "Show more of the top"], ["bottom", "Show more of the bottom"], ["high-top", "Top edge"], ["low-bottom", "Bottom edge"]]) + F.text(d, "date_tab", "Tab text (bottom left)") + F.text(d, "sub", "Small line in the tab") + `<div class="grid2">${F.text(d, "chip", "Chip (top left)")}${F.text(d, "cta", "Button text", "", "Get tickets")}</div>` + F.text(d, "url", "Link") + `<div class="grid2">${F.sel(d, "event", "Pixel event on tap", EVENTS)}<div>${F.chk(d, "soldout", "Sold out")}</div></div>`
       + `<h3>Days and locations</h3>` + F.days(d, "days", "Only show on", "Leave all unticked to show every day. For a weekly special, tick its day here and in Push to the top.")
       + F.days(d, "feature_days", "Push to the top on", "Moves this card first on those days, ahead of the rest.")
@@ -253,6 +253,8 @@ function locationsEditor(d, box) {
       <div class="row" style="margin-bottom:10px"><b>${esc(l.name || "New location")}</b><span class="n" style="display:flex;gap:6px"><button class="b s n" data-up type="button">↑</button><button class="b s d n" data-x type="button">Remove</button></span></div>
       <div class="grid2"><div class="f"><label>Name</label><input data-f="name" value="${esc(l.name)}"></div><div class="f"><label>Small line (area)</label><input data-f="area" value="${esc(l.area)}"></div></div>
       <div class="grid2"><div class="f"><label>Address</label><input data-f="address" value="${esc(l.address)}"></div><div class="f"><label>Phone</label><input data-f="phone" value="${esc(l.phone)}"></div></div>
+      <div class="f"><label>Note under the address (parking, entrance, construction)</label><textarea data-f="note">${esc(l.note)}</textarea></div>
+      <div class="f"><label style="display:flex;gap:8px;align-items:center;color:var(--text)"><input type="checkbox" data-fm ${l.map ? "checked" : ""}>Show a map of the address</label></div>
       <div class="f"><label>GHL tag for signups picked at this location</label><input data-f="tag" value="${esc(l.tag)}" placeholder="client-location"></div>
       <div class="f"><label>Hours (blank = closed; e.g. 5pm – 10pm, 11:30am – 11pm)</label><div class="hours">${days.map((n, k) => `<div><div class="hint" style="margin:0 0 3px">${n}</div><input data-h="${k}" value="${esc(l.hours[k])}"></div>`).join("")}</div></div>
       <label>Buttons (the first one is the big one)</label>
@@ -262,6 +264,7 @@ function locationsEditor(d, box) {
       const l = items[r.dataset.i];
       $$("[data-f]", r).forEach(el => el.oninput = () => { l[el.dataset.f] = el.value; if (el.dataset.f === "name") { l.key = el.value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); } });
       $$("[data-h]", r).forEach(el => el.oninput = () => { l.hours[+el.dataset.h] = el.value.trim(); });
+      $("[data-fm]", r).onchange = e => { l.map = e.target.checked; };
       $$("[data-j]", r).forEach(ar => { const a = l.actions[ar.dataset.j]; $$("[data-a]", ar).forEach(el => el.oninput = el.onchange = () => { a[el.dataset.a] = el.type === "checkbox" ? el.checked : el.value; }); $("[data-ax]", ar).onclick = () => { l.actions.splice(ar.dataset.j, 1); draw(); }; $("[data-aup]", ar).onclick = () => { const j = +ar.dataset.j; if (j) { [l.actions[j - 1], l.actions[j]] = [l.actions[j], l.actions[j - 1]]; draw(); } }; });
       $("[data-aadd]", r).onclick = () => { l.actions.push({ kind: "web", label: "", url: "" }); draw(); };
       $("[data-x]", r).onclick = () => { if (confirm("Remove this location?")) { items.splice(r.dataset.i, 1); draw(); } };
@@ -347,8 +350,8 @@ const DEF = { bg: "#0b0a0b", surface: "#161416", text: "#ffffff", muted: "#a69ea
 function vTheme() {
   const t = JSON.parse(JSON.stringify(S.client.theme || {})); t.colors = t.colors || {}; t.fonts = t.fonts || {};
   const v = $("#view");
-  const fontBox = role => { const f = t.fonts[role] = t.fonts[role] || { source: "google", family: "Inter", weights: role === "display" ? "600;700;800" : "400;500;600" }; f.files = f.files || [];
-    return `<div class="sub" data-role="${role}"><b>${role === "display" ? "Headings and buttons" : "Body text"}</b>
+  const fontBox = role => { const f = t.fonts[role] = t.fonts[role] || { source: "google", family: role === "heading" ? "" : "Inter", weights: role === "display" ? "600;700;800" : "400;500;600" }; f.files = f.files || [];
+    return `<div class="sub" data-role="${role}"><b>${role === "display" ? "Headings and buttons" : role === "heading" ? "Name, tagline and text headings (optional, leave family blank to use the one above)" : "Body text"}</b>
       <div class="grid2" style="margin-top:10px"><div class="f"><label>Source</label><select data-ff="source">${[["google", "Google Fonts"], ["upload", "Uploaded font files"], ["system", "System stack"]].map(([v2, n]) => `<option value="${v2}" ${f.source === v2 ? "selected" : ""}>${n}</option>`).join("")}</select></div>
       <div class="f"><label>Family name</label><input data-ff="family" value="${esc(f.family)}"><div class="hint">Google: exact name, e.g. “Bricolage Grotesque”. Upload: any name you like.</div></div></div>
       <div class="f g-only"><label>Weights</label><input data-ff="weights" value="${esc(f.weights || "")}" placeholder="400;600;700"></div>
@@ -356,7 +359,7 @@ function vTheme() {
       <input type="file" accept=".woff2,.woff,.ttf,.otf" data-up></div></div>`; };
   v.innerHTML = `<h2>Look</h2><div class="card">
     <h3 style="margin-top:0">Colours</h3><div class="grid2">${COLOR_KEYS.map(([k, n]) => `<div class="f"><label>${n}</label><div class="row"><input type="color" class="n" data-c="${k}" value="${esc(/^#[0-9a-f]{6}$/i.test(t.colors[k] || "") ? t.colors[k] : DEF[k])}"><input data-ct="${k}" value="${esc(t.colors[k] || DEF[k])}"></div></div>`).join("")}</div>
-    <h3>Fonts</h3>${fontBox("display")}${fontBox("body")}
+    <h3>Fonts</h3>${fontBox("display")}${fontBox("heading")}${fontBox("body")}
     <h3>Shape</h3><div class="grid2">
       ${F.sel(t, "button_shape", "Buttons", [["pill", "Pill"], ["rounded", "Rounded"], ["square", "Square"]])}
       <div class="f"><label>Corner radius (cards)</label><input type="number" min="0" max="32" data-n="radius" value="${t.radius ?? 14}"></div>
@@ -364,10 +367,12 @@ function vTheme() {
       <div class="f"><label>Heading letter spacing (em)</label><input type="number" step="0.01" min="-0.05" max="0.3" data-n="heading_tracking" value="${t.heading_tracking ?? 0}"></div>
       ${F.sel(t, "card_style", "Card style", [["flat", "Flat"], ["outline", "Outline"], ["raised", "Shadow"]])}
       <div class="f"><label>Page width (px)</label><input type="number" min="360" max="640" data-n="max_width" value="${t.max_width ?? 460}"></div>
-    </div>${F.chk(t, "texture", "Grain texture on the background")}
+      ${F.sel(t, "section_style", "Section titles", [["", "Large title"], ["label", "Small uppercase label"]])}<div></div>
+    </div>${F.chk(t, "texture", "Grain texture on the background")}${F.chk(t, "button_outline", "Outline buttons in the text colour")}<div id="taimg"></div>
     <button class="b p" id="tsave">Save look</button></div>`;
   const sync = () => $$("[data-role]", v).forEach(r => { const src = $("[data-ff=source]", r).value; $(".g-only", r).hidden = src !== "google"; $(".u-only", r).hidden = src !== "upload"; });
   $$("[data-ff=source]", v).forEach(s => s.onchange = sync); sync();
+  $("#taimg").append(imageField("Fill image for accent buttons (optional, e.g. a gradient or texture)", t.accent_image, p => t.accent_image = p));
   $$("[data-c]", v).forEach(el => el.oninput = () => { $(`[data-ct=${el.dataset.c}]`, v).value = el.value; });
   $$("[data-ct]", v).forEach(el => el.oninput = () => { if (/^#[0-9a-f]{6}$/i.test(el.value)) $(`[data-c=${el.dataset.ct}]`, v).value = el.value; });
   const collect = () => {
@@ -376,7 +381,7 @@ function vTheme() {
       $$("[data-fi]", r).forEach(row => { const x = f.files[row.dataset.fi]; x.weight = +$("[data-w]", row).value || 400; x.style = $("[data-st]", row).value; }); });
     $$("#view > .card > .grid2 [data-k]", v).forEach(el => t[el.dataset.k] = el.value);
     $$("[data-n]", v).forEach(el => t[el.dataset.n] = Number(el.value));
-    t.texture = $("[data-k=texture]", v).checked;
+    t.texture = $("[data-k=texture]", v).checked; t.button_outline = $("[data-k=button_outline]", v).checked;
   };
   $$("[data-role]", v).forEach(r => {
     const f = t.fonts[r.dataset.role];

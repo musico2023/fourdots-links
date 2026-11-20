@@ -1,0 +1,195 @@
+{
+  "client": {
+    "name": "Pilatee",
+    "slug": "pilatee",
+    "domains": [
+      "bio.pilatee.ca"
+    ],
+    "is_live": false,
+    "theme": {
+      "colors": {
+        "bg": "#F4F2EC",
+        "surface": "#FBFAF8",
+        "text": "#191817",
+        "muted": "#5E5B58",
+        "line": "#DAD6D0",
+        "accent": "#F7DCE8",
+        "accent_text": "#191817"
+      },
+      "fonts": {
+        "display": {
+          "source": "upload",
+          "family": "Argentum Novus",
+          "files": [
+            {
+              "url": "https://www.pilatee.ca/assets/fonts/argentum-novus.woff2",
+              "weight": 400,
+              "style": "normal"
+            },
+            {
+              "url": "https://www.pilatee.ca/assets/fonts/argentum-novus-bold.woff2",
+              "weight": 700,
+              "style": "normal"
+            }
+          ]
+        },
+        "heading": {
+          "source": "google",
+          "family": "Newsreader",
+          "weights": "400;500"
+        },
+        "body": {
+          "source": "google",
+          "family": "Hanken Grotesk",
+          "weights": "400;500;600"
+        }
+      },
+      "radius": 16,
+      "button_shape": "pill",
+      "heading_case": "upper",
+      "heading_tracking": 0.06,
+      "card_style": "flat",
+      "max_width": 460,
+      "section_style": "label",
+      "button_outline": true,
+      "accent_image": "https://www.pilatee.ca/assets/img/iridescent-960.webp"
+    },
+    "settings": {
+      "tz": "America/Toronto",
+      "default_tag": "pilatee-list",
+      "pixel_id": "1659287982652509",
+      "utm": {
+        "enabled": true,
+        "source": "instagram",
+        "medium": "social",
+        "campaign": "link_in_bio"
+      },
+      "domains_for_utm": [
+        "bio.pilatee.ca"
+      ],
+      "seo_title": "Pilatee · Vaughan's Pilates powerhouse",
+      "seo_description": "Reformer and heated mat Pilates in Concord, Vaughan. New here? Two weeks unlimited, both studios, $100 + HST.",
+      "favicon_path": "https://www.pilatee.ca/assets/img/favicon.png"
+    }
+  },
+  "blocks": [
+    {
+      "type": "header",
+      "data": {
+        "image_path": "https://www.pilatee.ca/assets/img/email/wordmark.png",
+        "image_style": "logo",
+        "title": "",
+        "tagline": "Vaughan's Pilates powerhouse"
+      }
+    },
+    {
+      "type": "heading",
+      "data": {
+        "text": "New here?"
+      }
+    },
+    {
+      "type": "button",
+      "data": {
+        "label": "Find your spice level",
+        "note": "New to Pilatee? Two weeks unlimited, both studios, $100 + HST.",
+        "url": "https://spice.pilatee.ca/?utm_source=instagram&utm_medium=social&utm_campaign=link_in_bio",
+        "style": "primary",
+        "event": "ViewContent"
+      }
+    },
+    {
+      "type": "heading",
+      "data": {
+        "text": "Already a member?"
+      }
+    },
+    {
+      "type": "button",
+      "data": {
+        "label": "Book a class",
+        "url": "https://www.pilatee.ca/book",
+        "icon": "calendar",
+        "event": "Schedule"
+      }
+    },
+    {
+      "type": "button",
+      "data": {
+        "label": "My account",
+        "note": "Bookings, memberships and credits",
+        "url": "https://www.pilatee.ca/account",
+        "icon": "arrow"
+      }
+    },
+    {
+      "type": "button",
+      "data": {
+        "label": "Class packs and memberships",
+        "url": "https://www.pilatee.ca/packages-pricing",
+        "icon": "bag",
+        "event": "ViewContent"
+      }
+    },
+    {
+      "type": "button",
+      "data": {
+        "label": "Get the Pilatee app",
+        "note": "Book and manage classes from your phone",
+        "url": "https://apps.apple.com/app/pilatee/id6828068050",
+        "android_url": "https://play.google.com/store/apps/details?id=com.marianatek.pilatee",
+        "icon": "app"
+      }
+    },
+    {
+      "type": "heading",
+      "data": {
+        "text": "Visit us"
+      }
+    },
+    {
+      "type": "locations",
+      "data": {
+        "items": [
+          {
+            "key": "concord",
+            "name": "Pilatee",
+            "address": "200 Edgeley Blvd, Unit 28, Concord, ON L4K 3Y8",
+            "map": true,
+            "note": "Free parking in the building's lot.\nConstruction nearby: allow a few extra minutes.",
+            "phone": "+1 905-669-0166",
+            "hours": [],
+            "actions": [
+              {
+                "kind": "directions",
+                "label": "Get directions",
+                "url": "https://www.google.com/maps/search/?api=1&query=Pilatee%2C%20200%20Edgeley%20Blvd%20Unit%2028%2C%20Concord%2C%20ON"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "heading",
+      "data": {
+        "text": "Contact"
+      }
+    },
+    {
+      "type": "socials",
+      "data": {
+        "items": [
+          {
+            "icon": "phone",
+            "url": "tel:+19056690166"
+          },
+          {
+            "icon": "email",
+            "url": "mailto:hello@pilatee.ca"
+          }
+        ]
+      }
+    }
+  ]
+}
