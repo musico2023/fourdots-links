@@ -187,6 +187,10 @@
           {
             "icon": "email",
             "url": "mailto:hello@pilatee.ca"
+          },
+          {
+            "icon": "instagram",
+            "url": "https://www.instagram.com/pilatee.powerhouse"
           }
         ]
       }
